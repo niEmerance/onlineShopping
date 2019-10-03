@@ -10,9 +10,9 @@
 
 <div class="container">
     <div class="blog">
-        
-        <a href="{{url_for('.newOrder',id=orders.id)}}"  style="font-family:'El Messiri', sans-serif ">Order</a>
+        <p>{{macro.display(orders)}}</p>
 
+        {{wtf.quick_form(form)}}
 
     </div>
 

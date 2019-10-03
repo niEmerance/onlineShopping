@@ -1,21 +1,21 @@
-# from flask import render_template,request,redirect,url_for,abort
-# from . import main
-# from ..models import User,Blog,Comment,Subscribe
-# from .. import db,photos
-# from .forms import UpdateProfile,BlogForm,CommentForm,UpdateblogForm,SubscribeForm
+from flask import render_template,request,redirect,url_for,abort
+from . import main
+from ..models import User,Order
+from .. import db,photos
+from .forms import OrderForm
 # from flask_login import login_required,current_user
-# import datetime
+import datetime
 # from ..email import mail_subscribemessage
 
-# @main.route('/')
-# def index():
-#     '''
-#     View root page function that returns the index page and its data
-#     '''
-#     blogs=Blog.query.all()
-#     quote=get_quotes()
-#     title = 'Home - Welcome to Bloging website'
-#     return render_template('index.html',title = title,blogs=blogs,quote=quote)
+@main.route('/')
+def index():
+    '''
+    View root page function that returns the index page and its data
+    '''
+    order=Order.query.all()
+    title = 'Home - Welcome to product website'
+    return render_template('index.html',title = title,orders=order)
+
 # @main.route('/user/<uname>')
 # def profile(uname):
 #     user = User.query.filter_by(username = uname).first()
@@ -50,20 +50,22 @@
 
 
 
-# @main.route('/blog/new', methods = ['GET','POST'])
-# @login_required
-# def newBlog():
-#     form = BlogForm()
-#     if form.validate_on_submit():
-#         blogTitle = form.blogTitle.data
-#         blogWrite = form.blogWrite.data
-#         newBlog = Blog(blogTitle=blogTitle,blogWrite=blogWrite,userId=current_user._get_current_object().id)
-#         # newBlog.saveBlog()
-#         db.session.add(newBlog)
-#         db.session.commit()
-#         return redirect(url_for('.index'))
-#     title = 'New blog'
-#     return render_template('newBlog.html',title = title,blog_form=form)
+@main.route('/order/new', methods = ['GET','POST'])
+def newOrder():
+    form = OrderForm()
+    # order= Order.query.filter_by(id=id).first()
+    if form.validate_on_submit():
+        productName = form.productName.data
+        productPrice= form.productPrice.data
+        productCategory = form.productCategory.data
+        productQuantity = form.productQuantity.data
+        newOrder = Order(productName=productName,productPrice=productPrice,productCategory=productCategory,productQuantity=productQuantity)
+        # newBlog.saveBlog()
+        db.session.add(newOrder)
+        db.session.commit()
+        return redirect(url_for('.newOrder'))
+    title = 'New Order'
+    return render_template('order.html',title = title,form=form)
 
 
 

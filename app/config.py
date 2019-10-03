@@ -4,9 +4,9 @@ class Config:
     General configuration parent class
     '''
     
-    QUOTE_API_BASE_URL ='http://quotes.stormconsultancy.co.uk/random.json'
-    SECRET_KEY ='Fannick'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://annick:escofavi@localhost/shop'
+    # QUOTE_API_BASE_URL ='http://quotes.stormconsultancy.co.uk/random.json'
+    SECRET_KEY ='12345'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://niemerance:12345@localhost/shoping'
     UPLOADED_PHOTOS_DEST ='app/static/photos'
     # simple mde  configurations
     SIMPLEMDE_JS_IIFE = True
@@ -37,7 +37,7 @@ class ProdConfig(Config):
 SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
 class TestConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://annick:escofavi@localhost/shop_test'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://niemerance:12345@localhost/shoping'
 
 
 class DevConfig(Config):
@@ -47,7 +47,7 @@ class DevConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     '''
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://annick:escofavi@localhost/shop'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://niemerance:12345@localhost/shoping'
     DEBUG = True
 config_options = {
 'development':DevConfig,

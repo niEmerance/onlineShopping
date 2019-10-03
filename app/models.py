@@ -16,8 +16,8 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(255),index =True)
     email = db.Column(db.String(255),unique = True,index = True)
     pass_secure = db.Column(db.String(255))
-    productId = db.relationship('Product',backref = 'user',lazy = "dynamic")
-    paymentId = db.relationship('Payment',backref = 'user',lazy = "dynamic")
+    # productId = db.relationship('Product',backref = 'user',lazy = "dynamic")
+    # orderId = db.relationship('Order',backref = 'product',lazy = "dynamic")
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
@@ -41,38 +41,36 @@ class Product(db.Model):
     productPrice = db.Column(db.String(255))
     productPicPath = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
-    userId = db.Column(db.Integer,db.ForeignKey("users.id"))
-    roleId = db.Column(db.Integer,db.ForeignKey("roles.id"))
-    paymentId = db.relationship('Payment',backref = 'product',lazy = "dynamic")
-
-    
+    # userId = db.Column(db.Integer,db.ForeignKey("users.id"))
+    # roleId = db.Column(db.Integer,db.ForeignKey("roles.id"))
+    # orderId = db.relationship('Order',backref = 'products',lazy = "dynamic")
 
     @classmethod
     def getProducts(cls,id):
         products = Product.query.filter_by(userId=id).all()
         return products 
 
-class Payment(db.Model):
-    __tablename__ = 'payments'
+class Order(db.Model):
+    __tablename__ = 'orders'
 
-    id = db.Column(db.Integer,primary_key = True)
-    bankAccount = db.Column(db.String(1000))
-    timePosted = db.Column(db.DateTime,default=datetime.utcnow)
-    paymentPicPath = db.Column(db.String)
-    userId= db.Column(db.Integer,db.ForeignKey("users.id"))
-    roleId = db.Column(db.Integer,db.ForeignKey("roles.id"))
-    productId = db.Column(db.Integer,db.ForeignKey("products.id"))
+    id = db.Column(db.Integer, primary_key=True)
+    productName = db.Column(db.String(20))
+    productPrice = db.Column(db.Integer)
+    productCategory = db.Column(db.String(10))
+    productQuantity= db.Column(db.Integer)
+    # userId = db.Column(db.Integer,db.ForeignKey("users.id"))
+    # productId = db.Column(db.Integer,db.ForeignKey("products.id"))
     
 
-    def savePayment(self):
+    def saveOrder(self):
         db.session.add(self)
         db.session.commit()
 
     
     @classmethod
-    def getPayment(cls,id):
-        payments = Payment.query.filter_by(userId=id).all()
-        return payments
+    def getOrder(cls,id):
+        order = Order.query.filter_by(userId=id).all()
+        return order
 
 class Role(db.Model):
     __tablename__='roles'
@@ -80,8 +78,7 @@ class Role(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     admin=db.Column(db.String(255))
     user=db.Column(db.String(255))
-    productId = db.relationship('Product',backref = 'role',lazy = "dynamic")
-    paymentId = db.relationship('Payment',backref = 'role',lazy = "dynamic")
+    # userId = db.Column(db.Integer,db.ForeignKey("users.id"))
 
 
      
