@@ -1,21 +1,34 @@
 
-{% macro display(orders_list) %}
+{% macro display(productCategory_list) %}
 <div>
-	{% if orders_list %}
-		{% for order in orders_list %}
+	{% if productCategory_list %}
+		{% for productCategory in productCategory_list %}
 		<div class="col-md-3">
 			
 			<div>
-		         	<p>{{order.productName}}</p>
-                    <p>{{order.productCategory}}</p>
-                    <p>{{order.productPrice}}</p>
-                    <p>{{order.productQuantity}}</p>
+					 <p id ="one" style="color:red; font-size: 20px;font-weight:bold">{{productCategory.productName}}</p>
+					 <img src="{{url_for('static',filename=productCategory.productPicPath)}}" alt="" class="img-thumbnail" width="180px"  height="250px">
+                    <p>{{productCategory.productCategory}}</p>
+                    <p>{{productCategory.productPrice}} Rwf</p>
+					<p>Size:{{productCategory.productSize}}</p>
+					
 			
 		    </div>
 
 		</div>
 		{% endfor %}
 	{% else %}
+	
 	{% endif %}
 </div>
 {% endmacro %}
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+#one{
+	font-family: 'Lobster', cursive;
+}
+</style>
+
+
+

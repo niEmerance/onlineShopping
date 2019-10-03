@@ -35,42 +35,26 @@ class User(UserMixin,db.Model):
 class Product(db.Model):
     __tablename__ = 'products'
 
-    id = db.Column(db.Integer,primary_key = True)
-    productName = db.Column(db.String)
-    productCategory=db.Column(db.String)
-    productPrice = db.Column(db.String(255))
-    productPicPath = db.Column(db.String)
-    posted = db.Column(db.DateTime,default=datetime.utcnow)
-    # userId = db.Column(db.Integer,db.ForeignKey("users.id"))
-    # roleId = db.Column(db.Integer,db.ForeignKey("roles.id"))
-    # orderId = db.relationship('Order',backref = 'products',lazy = "dynamic")
-
-    @classmethod
-    def getProducts(cls,id):
-        products = Product.query.filter_by(userId=id).all()
-        return products 
-
-class Order(db.Model):
-    __tablename__ = 'orders'
-
     id = db.Column(db.Integer, primary_key=True)
     productName = db.Column(db.String(20))
     productPrice = db.Column(db.Integer)
-    productCategory = db.Column(db.String(10))
+    productCategory = db.Column(db.String(25))
     productQuantity= db.Column(db.Integer)
+    productSize=db.Column(db.String(25))
+    productPicPath = db.Column(db.String(120))
     # userId = db.Column(db.Integer,db.ForeignKey("users.id"))
     # productId = db.Column(db.Integer,db.ForeignKey("products.id"))
     
 
-    def saveOrder(self):
+    def saveProduct(self):
         db.session.add(self)
         db.session.commit()
 
     
     @classmethod
-    def getOrder(cls,id):
-        order = Order.query.filter_by(userId=id).all()
-        return order
+    def getProduct(cls,id):
+        product = product.query.filter_by(userId=id).all()
+        return product
 
 class Role(db.Model):
     __tablename__='roles'
